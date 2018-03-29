@@ -16,6 +16,11 @@ def error_message(message):
   return {"message": message}
 
 
+@routes.get('/hello')
+async def hello(request):
+  return web.Response(text="hello world, this is Wallet Connect Push")
+
+
 @routes.post('/send-push-notification')
 async def send_push_notification(request):
   try:
