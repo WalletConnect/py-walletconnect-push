@@ -1,0 +1,2 @@
+aiohttp==3.0.9
+uvloop==0.9.1
