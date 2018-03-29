@@ -69,7 +69,7 @@ def main():
   parser = argparse.ArgumentParser()
   parser.add_argument('--fcm-server-key', type=str, default=None, help='Server FCM key')
   parser.add_argument('--host', type=str, default='localhost')
-  parser.add_argument('--port', type=int, default=8080)
+  parser.add_argument('--port', type=int, default=8081)
   args = parser.parse_args()
 
   app = web.Application()
