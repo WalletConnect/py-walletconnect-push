@@ -20,14 +20,16 @@ def error_message(message):
 async def send_push_notification(request):
   try:
     request_json = await request.json()
+    bridge_webhook = request_json['bridgeWebhook']
     fcm_key = request_json['fcmKey']
     transaction_uuid = request_json['transactionUuid']
-    notification_title = request_json['notificationTitle']
-    notification_body = request_json['notificationBody']
+    notification_details = request_json['notificationDetails']
+    notification_title = notification_details['notificationTitle']
+    notification_body = notification_details['notificationBody']
 
     # Send push notification
     push_notifications_service = request.app[PUSH_SERVICE]
-    data_message = {"transactionUuid": transaction_uuid}
+    data_message = {"bridge_webhook": bridge_webhook, "transactionUuid": transaction_uuid}
     await push_notifications_service.notify_single_device(
         registration_id=fcm_key,
         message_title=notification_title,
