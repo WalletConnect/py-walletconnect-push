@@ -27,14 +27,14 @@ async def send_push_notification(request):
     request_json = await request.json()
     fcm_token = request_json['fcmToken']
     transaction_uuid = request_json['transactionUuid']
-    device_uuid = request_json['deviceUuid']
+    session_token = request_json['sessionToken']
     notification_details = request_json['notificationDetails']
     notification_title = notification_details['notificationTitle']
     notification_body = notification_details['notificationBody']
 
     # Send push notification
     push_notifications_service = request.app[PUSH_SERVICE]
-    data_message = {"device_uuid": device_uuid, "transactionUuid": transaction_uuid}
+    data_message = {"sessionToken": session_token, "transactionUuid": transaction_uuid}
     await push_notifications_service.notify_single_device(
         registration_id=fcm_token,
         message_title=notification_title,
