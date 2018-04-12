@@ -11,6 +11,7 @@ routes = web.RouteTableDef()
 
 FCM_SERVER_KEY='fcm.server.key'
 PUSH_SERVICE='io.wallet.connect.push_notifications'
+NEW_REQUEST_MESSAGE='New request from {}'
 
 def error_message(message):
   return {"message": message}
@@ -28,16 +29,14 @@ async def send_push_notification(request):
     fcm_token = request_json['fcmToken']
     transaction_uuid = request_json['transactionUuid']
     session_token = request_json['sessionToken']
-    notification_details = request_json['notificationDetails']
-    notification_title = notification_details['notificationTitle']
-    notification_body = notification_details['notificationBody']
+    dapp_name = request_json['dappName']
+    notification_body = NEW_REQUEST_MESSAGE.format(dapp_name)
 
     # Send push notification
     push_notifications_service = request.app[PUSH_SERVICE]
     data_message = {"sessionToken": session_token, "transactionUuid": transaction_uuid}
     await push_notifications_service.notify_single_device(
         registration_id=fcm_token,
-        message_title=notification_title,
         message_body=notification_body,
         data_message=data_message)
     return web.json_response(status=200)
