@@ -22,19 +22,19 @@ async def hello(request):
   return web.Response(text="hello world, this is Wallet Connect Push")
 
 
-@routes.post('/send-push-notification')
+@routes.post('/push-notify')
 async def send_push_notification(request):
   try:
     request_json = await request.json()
     fcm_token = request_json['fcmToken']
-    transaction_uuid = request_json['transactionUuid']
-    session_token = request_json['sessionToken']
+    transaction_id = request_json['transactionId']
+    session_id = request_json['sessionId']
     dapp_name = request_json['dappName']
     notification_body = NEW_REQUEST_MESSAGE.format(dapp_name)
 
     # Send push notification
     push_notifications_service = request.app[PUSH_SERVICE]
-    data_message = {"sessionToken": session_token, "transactionUuid": transaction_uuid}
+    data_message = {"sessionId": session_id, "transactionId": transaction_id}
     await push_notifications_service.notify_single_device(
         registration_id=fcm_token,
         message_body=notification_body,
