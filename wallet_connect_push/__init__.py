@@ -52,7 +52,7 @@ async def send_push_notification(request):
 
 async def initialize_push_notifications(app):
   fcm_server_key = app[FCM_SERVER_KEY]
-  if fcm_server_key:
+  if not fcm_server_key:
     app[PUSH_SERVICE] = PushNotificationsService(debug=True)
   else:
     session = aiohttp.ClientSession(loop=app.loop)
