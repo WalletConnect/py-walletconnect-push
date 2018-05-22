@@ -5,7 +5,7 @@ import aiohttp
 import uvloop
 from aiohttp import web
 
-from wallet_connect_push.push_notifications import PushNotificationsService, FirebaseError
+from walletconnect_push.push_notifications import PushNotificationsService, FirebaseError
 
 routes = web.RouteTableDef()
 

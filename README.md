@@ -1,6 +1,6 @@
-# WalletConnectPush
+# py-walletconnect-push
 
-Exposes webhook for push notifications mechanism.
+Exposes webhook for push notifications mechanism, written in Python 3.
 
 ## Getting Started
 If you'd like to keep a separate Python environment for this project's installs, set up virtualenv
@@ -16,16 +16,16 @@ export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
 source /usr/local/bin/virtualenvwrapper.sh
 ~~~~
 
-From the project directory, run these commands to install the wallet-connect-push package in a virtualenv called "wallet-connect-push"
+From the project directory, run these commands to install the walletconnect-push package in a virtualenv called "walletconnect-push"
 ~~~~
-$ mkvirtualenv wallet-connect-push
+$ mkvirtualenv walletconnect-push
 $ pip install -r requirements.txt
 $ python setup.py develop
 ~~~~
 
 Run the project locally
 ~~~~
-$ wallet-connect --push-local --api-local
+$ walletconnect-push --push-local --api-local
 ~~~~
 
 Use a tool like Postman to create requests to interact with the server.
