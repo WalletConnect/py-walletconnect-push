@@ -28,4 +28,10 @@ Run the project locally
 $ walletconnect-push --push-local --api-local
 ~~~~
 
+
+In production, use the following where <FCM_SERVER_KEY> is the server key specified in your Firebase project account.
+~~~~
+$ walletconnect-push --fcm-server-key <FCM_SERVER_KEY>
+~~~~
+
 Use a tool like Postman to create requests to interact with the server.
