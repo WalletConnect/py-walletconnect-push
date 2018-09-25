@@ -14,12 +14,12 @@ PUSH_SERVICE='io.wallet.connect.push_notifications'
 NEW_REQUEST_MESSAGE='New {} request from {}'
 
 def format_request_message(call_method, dapp_name):
-    if call_method == 'eth_sendTransaction':
-        return NEW_REQUEST_MESSAGE.format('transaction', dapp_name)
-    elif call_method == 'eth_sign' or call_method == 'eth_signTypedData':
-        return NEW_REQUEST_MESSAGE.format('message', dapp_name)
-    else
-        return NEW_REQUEST_MESSAGE.format('call', dapp_name)
+  if call_method == 'eth_sendTransaction':
+    return NEW_REQUEST_MESSAGE.format('transaction', dapp_name)
+  elif call_method == 'eth_sign' or call_method == 'eth_signTypedData':
+    return NEW_REQUEST_MESSAGE.format('message', dapp_name)
+  else
+    return NEW_REQUEST_MESSAGE.format('call', dapp_name)
 
 def error_message(message):
   return {"message": message}
