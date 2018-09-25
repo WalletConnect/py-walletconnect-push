@@ -11,7 +11,15 @@ routes = web.RouteTableDef()
 
 FCM_SERVER_KEY='fcm.server.key'
 PUSH_SERVICE='io.wallet.connect.push_notifications'
-NEW_REQUEST_MESSAGE='New request from {}'
+NEW_REQUEST_MESSAGE='New {} request from {}'
+
+def format_request_message(call_method, dapp_name):
+    if call_method == 'eth_sendTransaction':
+        return NEW_REQUEST_MESSAGE.format('transaction', dapp_name)
+    elif call_method == 'eth_sign' or call_method == 'eth_signTypedData':
+        return NEW_REQUEST_MESSAGE.format('message', dapp_name)
+    else
+        return NEW_REQUEST_MESSAGE.format('signing', dapp_name)
 
 def error_message(message):
   return {"message": message}
@@ -27,14 +35,15 @@ async def send_push_notification(request):
   try:
     request_json = await request.json()
     fcm_token = request_json['fcmToken']
-    transaction_id = request_json['transactionId']
+    call_id = request_json['callId']
+    call_method = request_json['callMethod']
     session_id = request_json['sessionId']
     dapp_name = request_json['dappName']
-    notification_body = NEW_REQUEST_MESSAGE.format(dapp_name)
+    notification_body = format_request_message(call_method, dapp_name)
 
     # Send push notification
     push_notifications_service = request.app[PUSH_SERVICE]
-    data_message = {"sessionId": session_id, "transactionId": transaction_id}
+    data_message = {"sessionId": session_id, "callId": call_id}
     await push_notifications_service.notify_single_device(
         registration_id=fcm_token,
         message_body=notification_body,
@@ -64,7 +73,7 @@ async def close_push_notification_connection(app):
     await app[PUSH_SERVICE].session.close()
 
 
-def main(): 
+def main():
   parser = argparse.ArgumentParser()
   parser.add_argument('--fcm-server-key', type=str, default=None, help='Server FCM key')
   parser.add_argument('--host', type=str, default='localhost')
