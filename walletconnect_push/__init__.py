@@ -27,21 +27,25 @@ async def hello(request):
 async def send_push_notification(request):
   try:
     request_json = await request.json()
-    fcm_token = request_json['fcmToken']
+    push_type = request_json['pushType']
+    push_token = request_json['pushToken']
     call_id = request_json['callId']
     call_method = request_json['callMethod']
     session_id = request_json['sessionId']
     dapp_name = request_json['dappName']
     notification_body = NEW_REQUEST_MESSAGE.format(dapp_name)
 
-    # Send push notification
-    push_notifications_service = request.app[PUSH_SERVICE]
-    data_message = {"sessionId": session_id, "callId": call_id}
-    await push_notifications_service.notify_single_device(
-        registration_id=fcm_token,
-        message_body=notification_body,
-        data_message=data_message)
-    return web.json_response(status=200)
+    if push_type.lower() == 'fcm':
+      # Send push notification
+      push_notifications_service = request.app[PUSH_SERVICE]
+      data_message = {"sessionId": session_id, "callId": call_id}
+      await push_notifications_service.notify_single_device(
+          registration_id=push_token,
+          message_body=notification_body,
+          data_message=data_message)
+      return web.json_response(status=200)
+    else:
+      return web.json_response(error_message("Push type {} is not suported".format(push_type)), status=400)
   except KeyError:
     return web.json_response(error_message("Incorrect input parameters"), status=400)
   except TypeError:
