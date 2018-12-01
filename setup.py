@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
   name='walletconnect-push',
-  version="0.7.0",
+  version="0.7.10",
   install_requires=[
     'aiohttp',
     'uvloop',
