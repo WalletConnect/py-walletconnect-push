@@ -11,7 +11,7 @@ routes = web.RouteTableDef()
 
 FCM_SERVER_KEY='fcm.server.key'
 PUSH_SERVICE='io.wallet.connect.push_notifications'
-NEW_REQUEST_MESSAGE='New Request'
+NEW_REQUEST_MESSAGE='New request from {}'
 
 
 def error_message(message):
@@ -32,7 +32,8 @@ async def send_push_notification(request):
     call_id = request_json['callId']
     call_method = request_json['callMethod']
     session_id = request_json['sessionId']
-    notification_body = NEW_REQUEST_MESSAGE
+    dapp_name = request_json['dappName']
+    notification_body = NEW_REQUEST_MESSAGE.format(dapp_name)
 
     if push_type.lower() == 'fcm':
       # Send push notification
