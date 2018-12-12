@@ -30,7 +30,6 @@ async def send_push_notification(request):
     push_type = request_json['pushType']
     push_token = request_json['pushToken']
     call_id = request_json['callId']
-    call_method = request_json['callMethod']
     session_id = request_json['sessionId']
     dapp_name = request_json['dappName']
     notification_body = NEW_REQUEST_MESSAGE.format(dapp_name)
